@@ -126,10 +126,23 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="mission1\assembleCar.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="mission1\assembleCar.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="mission2\ManufactuedCar.cpp" />
+    <ClCompile Include="mission2\CarBuilder.cpp" />
+    <ClCompile Include="mission2\mission2.cpp" />
+    <ClCompile Include="mission2\testMission2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mission1\assemble.h" />
+    <ClInclude Include="mission2\AssemblingCar.h" />
+    <ClInclude Include="mission2\ManufactuedCar.h" />
+    <ClInclude Include="mission2\CarBuilder.h" />
+    <ClInclude Include="mission2\SedanBuilder.h" />
+    <ClInclude Include="mission2\SUVBuilder.h" />
+    <ClInclude Include="mission2\TruckBuilder.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
