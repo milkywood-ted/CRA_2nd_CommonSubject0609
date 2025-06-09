@@ -19,6 +19,9 @@
     <Filter Include="mission1">
       <UniqueIdentifier>{0f3a0831-d147-4e9e-a3a0-0f33fc41de07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="misson2">
+      <UniqueIdentifier>{974b753d-2816-45d2-be01-1e5bf3fdd870}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
@@ -30,13 +33,46 @@
     <ClCompile Include="mission1\assembleCar.cpp">
       <Filter>mission1</Filter>
     </ClCompile>
+    <ClCompile Include="mission2\CarBuilder.cpp">
+      <Filter>misson2</Filter>
+    </ClCompile>
+    <ClCompile Include="mission2\ManufactuedCar.cpp">
+      <Filter>misson2</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="mission2\mission2.cpp">
+      <Filter>misson2</Filter>
+    </ClCompile>
+    <ClCompile Include="mission2\testMission2.cpp">
+      <Filter>misson2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mission1\assemble.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>mission1</Filter>
+    </ClInclude>
+    <ClInclude Include="mission2\AssemblingCar.h">
+      <Filter>misson2</Filter>
+    </ClInclude>
+    <ClInclude Include="mission2\ManufactuedCar.h">
+      <Filter>misson2</Filter>
+    </ClInclude>
+    <ClInclude Include="mission2\CarBuilder.h">
+      <Filter>misson2</Filter>
+    </ClInclude>
+    <ClInclude Include="mission2\SedanBuilder.h">
+      <Filter>misson2</Filter>
+    </ClInclude>
+    <ClInclude Include="mission2\SUVBuilder.h">
+      <Filter>misson2</Filter>
+    </ClInclude>
+    <ClInclude Include="mission2\TruckBuilder.h">
+      <Filter>misson2</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

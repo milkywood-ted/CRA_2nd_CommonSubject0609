@@ -24,8 +24,8 @@ void delay(int ms)
 #define EXIT_CODE 2
 
 #define IS_QUERY_STEPBACK (inputQuery == 0 && manufacturingStep > SelectCarType_Query)
-
-int main()
+#ifndef _DEBUG
+int mission1()
 {
     char userInputBuf[100];
     int manufacturingStep = SelectCarType_Query;
@@ -57,6 +57,8 @@ int main()
 
         manufacturingStep = nextStep;
     }
+
+    return 0;
 }
 
 int processQuery(int inputQuery, int manufacturingStep)
@@ -65,45 +67,46 @@ int processQuery(int inputQuery, int manufacturingStep)
     {
         if (false == processSelectingCarType(inputQuery))
             return PROCESSING_ERROR;
-        manufacturingStep = SelectEngine_Query;
+        return SelectEngine_Query;
     }
     else if (manufacturingStep == SelectEngine_Query)
     {
         if (false == processSelectingEngineVendor(inputQuery))
             return PROCESSING_ERROR;
-        manufacturingStep = SelectBrakeSystem_Query;
+        return SelectBrakeSystem_Query;
     }
     else if (manufacturingStep == SelectBrakeSystem_Query)
     {
         if (false == processSelectingBrakeVendor(inputQuery))
             return PROCESSING_ERROR;
-        manufacturingStep = SelectSteeringSystem_Query;
+        return SelectSteeringSystem_Query;
     }
     else if (manufacturingStep == SelectSteeringSystem_Query)
     {
         if (false == processSelectingSteeringVendor(inputQuery))
             return PROCESSING_ERROR;
-        manufacturingStep = CheckCar_Query;
+        return CheckCar_Query;
     }
     else if (manufacturingStep == CheckCar_Query) {
         if (false == isValidRunningTestQuery(inputQuery))
             return PROCESSING_ERROR;
 
         if (inputQuery == 0) { // 처음으로 돌아가기
-            manufacturingStep = SelectCarType_Query;
-            return PROCESSING_ERROR;
+            return SelectCarType_Query;
         }
         processCheckCar(inputQuery);
     }
 
     return 0;
 }
+#endif
 
 bool isQueryStepBack(int inputQuery, int currentStep)
 {
     return (inputQuery == 0 && currentStep > SelectCarType_Query);
 }
 
+#ifndef _DEBUG
 void processCheckCar(int inputQuery)
 {
     ManufacturedCar_t newCar;
@@ -152,7 +155,7 @@ bool processSelectingSteeringVendor(int inputQuery)
     delay(800);
     return true;
 }
-
+#endif
 bool isNumeric(const char *checkNumber) {
     // 입력받은 문자가 숫자가 아니라면
     if (*checkNumber != '\0')
@@ -253,31 +256,31 @@ void printMenu(const int manufacturingStep)
 }
 
 
-
-bool isValidCarType(const int answer)
+#ifndef _DEBUG
+bool isValidCarType(const int intputQuery)
 {
-    if (answer >= CAR_TYPE_SEDAN && answer <= CAR_TYPE_TRUCK)
+    if (intputQuery >= CAR_TYPE_SEDAN && intputQuery <= CAR_TYPE_TRUCK)
         return true;
 
     printf("ERROR :: 차량 타입은 1 ~ 3 범위만 선택 가능\n");
     delay(800);
     return false;
 }
-void selectCarType(int answer)
+void selectCarType(int inputQuery)
 {
-    stack[SelectCarType_Query] = answer;
-    if (answer == 1)
+    stack[SelectCarType_Query] = inputQuery;
+    if (inputQuery == CAR_TYPE_SEDAN)
         printf("차량 타입으로 Sedan을 선택하셨습니다.\n");
-    if (answer == 2)
+    if (inputQuery == CAR_TYPE_SUV)
         printf("차량 타입으로 SUV을 선택하셨습니다.\n");
-    if (answer == 3)
+    if (inputQuery == CAR_TYPE_TRUCK)
         printf("차량 타입으로 Truck을 선택하셨습니다.\n");
 }
 
 
 bool isValidEnginTypeQuery(const int inputQuery)
 {
-    if (inputQuery >= 0 && inputQuery <= 4)
+    if (inputQuery >= ENGINE_VENDOR_GM && inputQuery <= ENGINE_WRONG)
         return true;
 
     printf("ERROR :: 엔진은 1 ~ 4 범위만 선택 가능\n");
@@ -287,17 +290,17 @@ bool isValidEnginTypeQuery(const int inputQuery)
 void selectEngine(int answer)
 {
     stack[SelectEngine_Query] = answer;
-    if (answer == 1)
+    if (answer == ENGINE_VENDOR_GM)
         printf("GM 엔진을 선택하셨습니다.\n");
-    if (answer == 2)
+    if (answer == ENGINE_VENDOR_TOYOTA)
         printf("TOYOTA 엔진을 선택하셨습니다.\n");
-    if (answer == 3)
+    if (answer == ENGINE_VENDOR_WIA)
         printf("WIA 엔진을 선택하셨습니다.\n");
 }
 
 bool isValidBrakeSystemQuery(const int inputQuery)
 {
-    if (inputQuery >= 0 && inputQuery <= 3)
+    if (inputQuery >= BRAKE_VENDOR_MANDO && inputQuery <= BRAKE_VENDOR_BOSCH)
         return true;
 
     printf("ERROR :: 제동장치는 1 ~ 3 범위만 선택 가능\n");
@@ -307,17 +310,17 @@ bool isValidBrakeSystemQuery(const int inputQuery)
 void selectbrakeSystem(int inputQuery)
 {
     stack[SelectBrakeSystem_Query] = inputQuery;
-    if (inputQuery == 1)
+    if (inputQuery == BRAKE_VENDOR_MANDO)
         printf("MANDO 제동장치를 선택하셨습니다.\n");
-    if (inputQuery == 2)
+    if (inputQuery == BRAKE_VENDOR_CONTINENTAL)
         printf("CONTINENTAL 제동장치를 선택하셨습니다.\n");
-    if (inputQuery == 3)
+    if (inputQuery == BRAKE_VENDOR_BOSCH)
         printf("BOSCH 제동장치를 선택하셨습니다.\n");
 }
 
 bool isValidSteeringSystemQuery(const int inputQuery)
 {
-    if (inputQuery >= 0 && inputQuery <= 2)
+    if (inputQuery >= STEERING_VENDOR_BOSCH && inputQuery <= STEERING_VENDOR_MOBIS)
         return true;
 
     printf("ERROR :: 조향장치는 1 ~ 2 범위만 선택 가능\n");
@@ -327,36 +330,36 @@ bool isValidSteeringSystemQuery(const int inputQuery)
 void selectSteeringSystem(int answer)
 {
     stack[SelectSteeringSystem_Query] = answer;
-    if (answer == 1)
+    if (answer == STEERING_VENDOR_BOSCH)
         printf("BOSCH 조향장치를 선택하셨습니다.\n");
-    if (answer == 2)
+    if (answer == STEERING_VENDOR_MOBIS)
         printf("MOBIS 조향장치를 선택하셨습니다.\n");
 }
 
 
 #define IS_INVALID_BOSCH_COMPOSITION (car.brakeVendor == BRAKE_VENDOR_BOSCH && car.steeringVendor != STEERING_VENDOR_BOSCH)
-inline bool isValidSedan()
+inline bool isValidSedan(ManufacturedCar_t &newCar)
 {
-    return stack[SelectBrakeSystem_Query] != BRAKE_VENDOR_CONTINENTAL;
+    return newCar.brakeVendor != BRAKE_VENDOR_CONTINENTAL;
 }
-inline bool isValidSUV()
+inline bool isValidSUV(ManufacturedCar_t &newCar)
 {
-    return !(stack[SelectCarType_Query] == CAR_TYPE_SUV && stack[SelectEngine_Query] == ENGINE_VENDOR_TOYOTA);
+    return !(newCar.type== CAR_TYPE_SUV && newCar.enginVendor == ENGINE_VENDOR_TOYOTA);
 }
-inline bool isValidTruck()
+inline bool isValidTruck(ManufacturedCar_t &newCar)
 {
-    return stack[SelectEngine_Query] != ENGINE_VENDOR_WIA && stack[SelectBrakeSystem_Query] != BRAKE_VENDOR_MANDO;
+    return newCar.enginVendor != ENGINE_VENDOR_WIA && newCar.brakeVendor != BRAKE_VENDOR_MANDO;
 }
-int isValidManufacturedCar(const ManufacturedCar_t car)
+int isValidManufacturedCar(ManufacturedCar_t &car)
 {
     if (car.type == CAR_TYPE_SEDAN)
-        return isValidSedan();
+        return isValidSedan(car);
 
     else if (car.type == CAR_TYPE_SUV)
-        return isValidSUV();
+        return isValidSUV(car);
 
     else if (car.type == CAR_TYPE_TRUCK)
-        return isValidTruck();
+        return isValidTruck(car);
     
     if (IS_INVALID_BOSCH_COMPOSITION)
         return false;
@@ -464,3 +467,4 @@ void testProducedCar(ManufacturedCar_t newCar)
         printf("자동차 부품 조합 테스트 결과 : PASS\n");
     }
 }
+#endif
