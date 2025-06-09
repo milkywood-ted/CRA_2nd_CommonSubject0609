@@ -15,3 +15,6 @@ D4 - 리팩토링에 디자인 패턴을적용한다. - O(builder pattern)
 
  4. 코드 커버리지100%
  D5 - 리팩토링이 끝난 코드에, 코드 커버리지가100% 되어야 한다. - X (64%)
+
+
+![cra_coverage](https://github.com/user-attachments/assets/c4bdb903-685b-42c5-9c51-7c7b8e975ab3)
