@@ -16,6 +16,9 @@
     <Filter Include="Test">
       <UniqueIdentifier>{0530b687-3d25-4592-b48b-a08237265c40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mission1">
+      <UniqueIdentifier>{0f3a0831-d147-4e9e-a3a0-0f33fc41de07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gmock\gmock-all.cc">
@@ -24,17 +27,16 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\gtest\gtest-all.cc">
       <Filter>Test</Filter>
     </ClCompile>
-    <ClCompile Include="assemble.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="cal.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="cal_test.cpp">
-      <Filter>Test</Filter>
+    <ClCompile Include="mission1\assembleCar.cpp">
+      <Filter>mission1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="mission1\assemble.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
